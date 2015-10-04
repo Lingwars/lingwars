@@ -18,8 +18,24 @@ class Sentence(object):
     @property
     def words(self):
         if not hasattr(self, '_words'):
-            self._words = [Word(it) for it in word_tokenize(self.text, language='spanish')]
+            self._words = []
+            words = word_tokenize(self.text, language='spanish')
+            index = 0
+            for word in words:
+                self._words.append(SentenceWord(word, self, index))
+                index +=1
         return self._words
+
+
+class SentenceWord(Word):
+    """
+        A word inside a sentence
+    """
+    def __init__(self, text, sentence, index, *args, **kwargs):
+        super(SentenceWord, self).__init__(text, *args, **kwargs)
+        self.sentence = sentence
+        self.index = index
+
 
 
 if __name__ == '__main__':
@@ -39,4 +55,4 @@ recordar aquella tarde remota en que su padre lo llevó a conocer el hielo.
     filters = [RemoveStopWords(), RemovePunctuation()]
     for word in sentence.words:
         if all(filter(word) for filter in filters):
-            print(word)
+            print("%d - %s" % (word.index, word.text))
