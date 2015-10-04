@@ -35,12 +35,12 @@ class Text(object):
                     counter[word.text] += 1
         return counter
 
-    def count_stems(self, filters = []):
-        counter = Counter()
+    def count_lemmas(self, eagles_match=2, filters = []):
+        counter = {}
         for sentence in self.sentences:
-            for word in sentence.words:
+            for word in sentence.pos_words:
                 if all(filter(word) for filter in filters):
-                    counter[word.stem] += 1
+                    counter.setdefault((word.lemma, word.eagles.code[:eagles_match]), []).append(word)
         return counter
 
 

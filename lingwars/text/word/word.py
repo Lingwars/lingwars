@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from nltk.stem.snowball import SpanishStemmer
+from apicultur.utils import ApiculturRateLimitSafe
+from lingwars import config
+from lingwars.utils.eagles import create_from_code
+
+apicultur_store = config.get('apicultur_store')
 
 stemmer = SpanishStemmer()
 
@@ -25,6 +30,13 @@ class Word(object):
 
     @property
     def lemma(self):
-        if not hasattr(self, '_lemma'):
-            raise NotImplementedError()
-        return self._lemma
+        raise RuntimeError("Non desambiguated words may have more than one lemma")
+
+    """
+    def get_lemmas(self):
+        if not hasattr(self, '_lemmas'):
+            r = apicultur_store.lematiza2(word=self.text)
+            assert r['palabra'] == self.text
+            self._lemmas = [(lema['lema'], create_from_code(lema['categoria'])) for lema in r['lemas']]
+        return self._lemmas
+    """

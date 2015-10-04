@@ -3,6 +3,8 @@
 
 import os
 from . import Word
+from ..sentence import SentenceWord
+from ...utils.eagles import create_from_code, EaglesCode
 
 root = os.path.dirname(__file__)
 
@@ -46,3 +48,12 @@ class RemoveStopWords(RemoveFromList):
 
 class RemovePunctuation(RemoveFromList):
     filtered = ['.', ',',]
+
+
+class RemoveByEAGLES(BaseFilter):
+    def __init__(self, codes):
+        self.eagles = [create_from_code(code) for code in codes]
+
+    def __call__(self, word):
+        assert isinstance(word, SentenceWord)
+        return not any([EaglesCode.match(word.eagles.code, it.code)>0 for it in self.eagles])
