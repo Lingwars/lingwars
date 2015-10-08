@@ -10,6 +10,18 @@ prehistóricos. El mundo era tan reciente, que muchas cosas carecían de nombre,
 mencionarlas había que señalarías con el dedo.
 """
 
+import lingwars
+lingwars.download()
+
+from lingwars.utils.install.pattern import build_parser
+parser = build_parser('C:/Users/jgarcia.GIG/lingwars/brill')
+r = parser.parse("El gato se sentó en la alfombra.")
+
+from pprint import pprint
+pprint(r)
+
+raise Done()
+
 from lingwars.text import Text, Word, Sentence
 
 def dump_sentence(texto):
@@ -22,6 +34,7 @@ dump_sentence("El Real Madrid ha ganado 20 copas de Europa")
 #dump_sentence("ha querido dejárselo largo")
 dump_sentence("La palabra adfadfsr acabo de inventármela ahora")
 dump_sentence("los entregué a la policía.")
+dump_sentence("dilo que me llame.")
 
 """
 # A little bit of text
