@@ -1,0 +1,6 @@
+# Lista de palabras vacías (una palabra por línea)
+a
+de
+el
+que
+y
